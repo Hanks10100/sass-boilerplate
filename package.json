@@ -1,0 +1,26 @@
+{
+  "name": "sass-boilerplate",
+  "version": "0.0.1",
+  "description": "My architecture for Sass project.",
+  "author": "zhanghan.me@gamil.com",
+  "license": "MIT",
+  "scripts": {
+    "watch": "gulp",
+    "compile": "gulp compile",
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hanks10100/sass-boilerplate.git"
+  },
+  "keywords": [
+    "sass",
+    "architecture",
+    "boilerplate"
+  ],
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^2.3.1",
+    "gulp-clean": "^0.3.1",
+    "gulp-ruby-sass": "^1.0.5"
+  }
+}
