@@ -1,0 +1,49 @@
+@charset "UTF-8";
+// ===========================================================================
+//  网站公用配置变量
+//  注：所有全局变量都应当引自这个文件
+// ===========================================================================
+
+// 是否支持移动端
+$support-mobile: true !default;
+
+// 网站是否附带动效
+$with-animate: true !default;
+
+
+
+// =============================================================
+//  引入配色方案
+// =============================================================
+$website-theme: default !default;  //网站默认主题
+@import "theme";
+
+
+
+// =============================================================
+//  引入布局参数
+// =============================================================
+@import "typography";
+
+
+
+// =============================================================
+//  常用字体设置
+// =============================================================
+$georgia: Georgia, Cambria, "Times New Roman", Times, serif !default;
+$helvetica: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif !default;
+$lucida-grande: "Lucida Grande", Tahoma, Verdana, Arial, sans-serif !default;
+$monospace: "Bitstream Vera Sans Mono", Monaco, "Courier New", Consolas, Courier, monospace !default;
+$verdana: Verdana, Geneva, sans-serif !default;
+
+// 默认的中英文字体（正文字体）
+$zh-font: "Microsoft YaHei", 微软雅黑, "宋体", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$en-font: $helvetica;
+$font: $zh-font;
+
+
+// 标题字体
+$title-font: $georgia;
+
+// 文章内容的字体
+$article-font: $verdana;

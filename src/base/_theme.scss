@@ -1,0 +1,70 @@
+@charset "UTF-8";
+// ===========================================================================
+//  提取主题中相应配置的颜色
+//  在函数内部预定义了网站的配色主题
+//  使用方法：background-color: C("body-bg");
+//  注：调用函数前需要配置$website-theme变量
+// ===========================================================================
+@function C($component, $theme: $website-theme) {
+
+    // =============================================================
+    //  预定义常用颜色
+    //  将所有变量封装进函数中，避免外部误引用
+    //  from Bootstrap
+    // =============================================================
+    $gray-darker:   lighten(#000, 13.5%) !default; // #222
+    $gray-dark:     lighten(#000, 20%)   !default; // #333
+    $gray:          lighten(#000, 33.5%) !default; // #555
+    $gray-light:    lighten(#000, 46.7%) !default; // #777
+    $gray-lighter:  lighten(#000, 93.5%) !default; // #eee
+
+    $brand-primary: #428BCA !default;
+    $brand-success: #5CB85C !default;
+    $brand-info:    #5BC0DE !default;
+    $brand-warning: #F0AD4E !default;
+    $brand-danger:  #D9534F !default;
+
+
+    // =============================================================
+    //  定义配色方案
+    //  根据不同风格设置不同的主题
+    // =============================================================
+    $themes: (
+        //所有主题的公用配色，在不同主题中，可以将其覆盖
+        common: (),
+
+        default: (
+            "fcolor":  $gray-darker,  // 默认文字颜色
+            "body-bg": #CCC,          // 主屏背景色
+        ),
+
+        // 其他配色方案
+        light: (),
+        dark: ()
+    );
+
+
+    // =============================================================
+    //  函数主体
+    //  用于提取themes中预定义的颜色
+    // =============================================================
+    $common: map-get($themes, common);
+    $current: map-get($themes, $theme);
+
+    @if map-has-key($current, $component) {
+        @return map-get($current, $component);
+    } @else {
+        @if map-has-key($common, $component) {
+            @return map-get($common, $component);
+        }
+    } @else {
+        @warn "Waring: `#{$common}和#{$current}中不含#{$component}属性！`";
+    }
+} // end of C
+
+
+
+// 允许函数名小写
+@function c($component, $theme: $website-theme) {
+    @return C($component, $theme: $website-theme)
+}
