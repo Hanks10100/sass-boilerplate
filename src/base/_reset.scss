@@ -1,0 +1,157 @@
+@charset "UTF-8";
+// ===========================================================================
+//  自定义某些标签的样式
+//  应当在其他样式之前引用
+//    （本文件和normalize文件只需要引用其中一个就可以
+//      若要同时引用，则将本文件放在normalize之后）
+// ===========================================================================
+
+$support-mobile: true;  // 是否针对手机端
+$custom-list: true;  // 是否自定义列表的样式
+$chinese-only: true;  // 是否针对中文排版进行优化
+
+
+
+// 1. 去除（几乎所有）标签的内外边距和边框
+// 2. 统一标签字体渲染位置
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, figure, figcaption,
+footer, header, hgroup, menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;  // 1
+    padding: 0;  // 1
+    border: 0;  // 1
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;  // 2
+}
+
+
+
+// 为低版本浏览器声明HTML5新标签的显示类型
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+
+
+// 1. 去除<a>链接悬停时的下划线
+// 2. 去除<a>链接获取焦点时的外圈线
+a {
+    &:link,
+    &:visited,
+    &:hover,
+    &:active {
+        text-decoration: none;  // 1
+        outline: none;  // 2
+    }
+}
+
+
+
+// 去掉标题上下方的留白（有需求时自行统一添加）
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+
+// 清除 IE 和 FireFox 中的图片边框
+img {
+    border: none;
+}
+
+
+
+// 1. 去除列表样式符
+// 2. 清除列表左缩进
+// 3. 清除列表上下间距
+@if ($custom-list) {
+    ul, ol, dd {
+        list-style-type: none;  // 1
+        padding-left: 0;  // 2
+        margin-top: 0;  // 3
+        margin-bottom: 0;  // 3
+    }
+}
+
+
+
+// 1. 禁止按钮中的文字被选中
+// 2. 清除按钮和输入框获取焦点时和点击后的外圈线
+//    如此会导致在页面中使用tab键时没有明确的提示效果
+input, button, textarea, keygen, select {
+    -webkit-user-select: none;  // 1
+       -moz-user-select: none;  // 1
+        -ms-user-select: none;  // 1
+            user-select: none;  // 1
+    &:focus, &:active {
+        outline: none;  // 2
+    }
+}
+
+
+
+// 去除引用部分外部的引号
+blockquote, q {
+    quotes: none;
+    &:before, &:after {
+       content: "";
+       content: none;
+    }
+}
+
+
+
+// 合并表格的边框
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+
+
+// 统一选中文字的配色，去除阴影
+@mixin custom-selection {
+    ::selection      { @content; }
+    ::-moz-selection { @content; }
+}
+@include custom-selection {
+    background: #3399FF;
+    color: #FFF;
+    text-shadow: none;
+}
+
+
+
+// 针对中文排版
+@if ($chinese-only) {
+
+    // 汉字排版中没有斜体
+    em, i {
+        font-style: normal;
+    }
+
+    // 1. 中文段落首行有缩进
+    // 2. 中英文混杂时，为了排版整齐，使英文断词
+    p {
+        text-indent: 2em;  // 1
+        word-break: break-all;  // 2
+    }
+}
+
+@if ($support-mobile) {
+    html, body {
+        height: 100%;
+    }
+}

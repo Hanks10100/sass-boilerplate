@@ -1,0 +1,163 @@
+@charset "UTF-8";
+// ===========================================================================
+//  简化常用样式的写法
+// ----------------------------------index------------------------------------
+//    clearfix               清除浮动
+//    ellipsis               超出一行的文字以...显示
+//    e/m                    BEM命名法，快速添加前缀
+//    overflow-hidden        内容超出范围时隐藏
+//    retina                 引入retina图像
+//    size                   同时写元素宽度高度
+//    vertical-center        文字垂直居中
+// ===========================================================================
+
+
+
+// =============================================================
+//  清除浮动
+// =============================================================
+@mixin clearfix {
+    *zoom: 1;
+    &:before, &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+
+
+// =============================================================
+//  超出一行的文字以...显示
+// =============================================================
+@mixin ellipsis($substract:0) {
+    overflow      : hidden;
+    text-overflow : ellipsis;
+    white-space   : nowrap;
+    width         : 100% - $substract;
+}
+
+
+
+
+// =============================================================
+//  BEM命名法，快速添加前缀
+//  参考：http://unakravets.tumblr.com/post/64113156740/sass-3-3-at-root-bem
+//  注：不可在mixin内部使用
+// =============================================================
+
+//element 用 "__" 链接
+@mixin E($name) {
+    @at-root  &__#{$name} {
+        @content;
+    }
+}
+
+//modifier 用 "--" 链接
+@mixin M($name) {
+    @at-root  &--#{$name} {
+        @content;
+    }
+}
+
+//兼容小写形式
+@mixin e($name) { @include E($name) };
+@mixin m($name) { @include M($name) };
+
+
+
+
+// =============================================================
+//  内容超出范围时隐藏
+// =============================================================
+@mixin overflow-hidden {
+    overflow: hidden;
+    &:before {
+        content: "";
+        display: block;
+        width  : 0;
+        height : 100%;
+    }
+}
+
+
+
+// =============================================================
+//  相对/绝对/固定定位的快速写法
+//  使用方法：@include position(fixed, null 10px 24px auto);
+//  参考bourbon项目
+// =============================================================
+@mixin position($position: relative, $coordinates: null null null null) {
+
+    @if type-of($position) == list {
+        $coordinates: $position;
+        $position: relative;
+    }
+    //$coordinates: unpack($coordinates);
+
+    $top   : nth($coordinates, 1);
+    $right : nth($coordinates, 2);
+    $bottom: nth($coordinates, 3);
+    $left  : nth($coordinates, 4);
+
+    position: $position;
+
+    @if ($top and $top == auto) or (type-of($top) == number) {
+        top: $top;
+    }
+    @if ($right and $right == auto) or (type-of($right) == number) {
+        right: $right;
+    }
+    @if ($bottom and $bottom == auto) or (type-of($bottom) == number) {
+        bottom: $bottom;
+    }
+    @if ($left and $left == auto) or (type-of($left) == number) {
+        left: $left;
+    }
+}
+
+
+
+
+// =============================================================
+//  引入retina图像
+// =============================================================
+@mixin retina($image, $width, $height) {
+    @media (min--moz-device-pixel-ratio: 1.3),
+        (-o-min-device-pixel-ratio: 2.6/2),
+        (-webkit-min-device-pixel-ratio: 1.3),
+        (min-device-pixel-ratio: 1.3),
+        (min-resolution: 1.3dppx) {
+            /**/
+            background-image: url($image);
+            background-size: $width $height;
+        }
+}
+
+
+
+// =============================================================
+//  同时写元素宽度高度
+// =============================================================
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+
+
+
+// =============================================================
+//  文字垂直居中
+// =============================================================
+@mixin vertical-center {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+       -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+         -o-transform: translateY(-50%);
+            transform: translateY(-50%);
+}

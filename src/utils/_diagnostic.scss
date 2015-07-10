@@ -1,0 +1,69 @@
+@charset "UTF-8";
+// ===========================================================================
+//  诊断页面中样式不规范的地方，以不常用的颜色标注出来
+//
+// ---------------------------------------------------------------------------
+//
+// - **黄色背景**：空标签
+// - **绿色背景**：<a>标签链接为空或者为`#`
+// - **红色粗实线边框**：
+//     1. 包含内联样式
+//     2. 使用被废弃的标签
+// - **红色粗虚线边框**：定义了`id`和`class`但是内容为空
+// - **红色细实线边框**：`<table>`没有`summary`属性或者其内容为空
+// - **绿色细实线边框**：`<img>`没有`alt`属性或者其内容为空
+// - **紫色细实线边框**：
+//     1. `<img>`没有`title`属性或者其内容为空
+//     2. `<a>`的`title`属性内容为空或者定义了`href`但是没有定义`title`
+//
+// ===========================================================================
+
+
+// 配色
+// 注：若修改配色，应当同步修改头部注释中的内容
+$A: red;
+$B: yellow;
+$C: fuchsia; // 紫色
+$D: lime;    // 绿色
+
+
+div:empty, span:empty,
+li:empty, p:empty,
+td:empty, th:empty {
+    padding: 0.5em;
+    background: $B;
+}
+
+a[href=""], a[href="#"] {
+    background: $D;
+}
+
+*[style],
+applet, basefont, center, dir, font,
+isindex, s, strike, u, xmp {
+    outline: 5px solid $A;
+}
+
+*[id=""], *[class=""] {
+    outline: 5px dotted $A;
+}
+
+table:not([summary]),
+table[summary=""] {
+    outline: 2px solid $A;
+}
+
+img:not([alt]),
+img[alt=""] {
+    border: 2px solid $D;
+}
+
+img:not([title]),
+img[title=""],
+a[title=""],
+a[href]:not([title]) {
+    outline: 2px solid $C;
+}
+
+// th {border: 2px solid $A;}
+// th[scope="col"], th[scope="row"] {border: none;}
